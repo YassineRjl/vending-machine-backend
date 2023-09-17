@@ -1,5 +1,5 @@
 {
-  "name": "vending_machine",
+  "name": "vending-machine-backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
