@@ -1,6 +1,7 @@
 import { Purchase } from "@prisma/client";
 import { prisma } from "../utils";
 
+// used for storing purchase history for a given user
 export class PurchaseClass {
   static async create(data: Omit<Purchase, "id">) {
     return prisma.purchase.create({ data });

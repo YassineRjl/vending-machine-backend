@@ -16,7 +16,7 @@ These instructions will get you a copy of the project up and running on your loc
 1. Clone the repository
 
 ```
-git clone https://github.com/your-username/vending-machine-backend.git
+git clone https://github.com/YassineRjl/vending-machine-backend.git
 ```
 
 2. Install dependencies
@@ -53,7 +53,7 @@ npm run test
 - `start`: Builds the application and runs it
 - `build`: Removes the dist folder and compiles TypeScript files
 - `test`: Runs the tests with Jest
-- `prisma:types`: Generates Prisma client
+- `prisma:client`: Generates Prisma client
 - `prisma:migrate`: Runs Prisma migrations
 
 ## Authors

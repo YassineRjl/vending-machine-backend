@@ -3,7 +3,7 @@ import Joi from "joi";
 
 // used mainly during the creation of the resource.
 // it makes sense to validate every route instead of just the creation process
-// but for the sake of the time constraints and to submit this project this weekend as requested, I demonstrated it here
+// but for the sake of the time constraints and to submit this project this weekend as requested, I demonstrated the behavior partially here
 // Happy to discuss this further
 
 export const validateUser = async (

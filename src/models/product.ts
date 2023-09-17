@@ -10,6 +10,9 @@ export class ProductClass {
     return prisma.product.findUnique({ where: { id } });
   }
 
+  // used for browsing the products on the frontend
+  // Side note: for scalability, we should implement pagination
+  // Example: https://www.prisma.io/docs/concepts/components/prisma-client/pagination
   static async findAll() {
     return (await prisma.product.findMany()).sort((a, b) => a.id - b.id);
   }

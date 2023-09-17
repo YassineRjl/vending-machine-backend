@@ -6,7 +6,7 @@ export class SessionClass {
     return prisma.session.create({ data });
   }
 
-  static findByActiveSessions(userId: string) {
+  static findActiveSessions(userId: string) {
     return prisma.session.findMany({ where: { userId, isActive: true } });
   }
 

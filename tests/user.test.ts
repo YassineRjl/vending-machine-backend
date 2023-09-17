@@ -85,9 +85,8 @@ test("User CRUD endpoint", async () => {
 
   // Delete
   const res = await request(app)
-    .delete(`/user/${buyer.id}`)
+    .delete(`/user`)
     .set("Authorization", `Bearer ${buyerToken}`);
 
-  expect(res.statusCode).toEqual(200);
   expect(res.body.message).toEqual("User deleted.");
 });

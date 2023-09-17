@@ -28,7 +28,7 @@ router.post("/", authenticate, allowBuyerOnly, async (req, res) => {
     return res.status(400).json({ message: "Insufficient funds." });
   }
 
-  // prepare for transaction since we're updating multiple sensitive tables
+  // prepare for a DB transaction since we're updating multiple sensitive tables
   const updatedProductAvailability = prisma.product.update({
     data: {
       amountAvailable: product.amountAvailable - amount,
@@ -47,6 +47,9 @@ router.post("/", authenticate, allowBuyerOnly, async (req, res) => {
     },
   });
 
+  // add a new purchase record with redundant data in case the product is archived or the name is changed
+  // we also assume the product never gets deleted, just like the Stripe API. once a product is used
+  // it could be archived, but never deleted.
   const newPurchase = prisma.purchase.create({
     data: {
       userId,

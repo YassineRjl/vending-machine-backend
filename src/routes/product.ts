@@ -24,8 +24,8 @@ router.post(
   }
 );
 
-// get a specific product
-router.get("/:id", async (req, res) => {
+// get a product by id
+router.get("/:id", authenticate, async (req, res) => {
   const product = await ProductClass.findById(Number(req.params.id));
   if (!product) {
     return res.status(404).json({ message: "Product not found." });
@@ -34,7 +34,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // get all products in the database
-router.get("/", async (_, res) => {
+router.get("/", authenticate, async (_, res) => {
   const productList = await ProductClass.findAll();
   if (!productList) {
     return res.status(404).json({ message: "Products not found." });
@@ -46,10 +46,16 @@ router.get("/", async (_, res) => {
 router.patch("/:id", authenticate, allowSellerOnly, async (req, res) => {
   const product = await ProductClass.findById(Number(req.params.id));
 
-  if (product?.sellerId !== req.user?.id) {
+  if (product?.sellerId !== req.user.id) {
     return res
       .status(403)
       .json({ message: "You are not authorized to update this product." });
+  }
+
+  if (req.body.id) {
+    return res.status(400).json({
+      message: "ID cannot be updated.",
+    });
   }
 
   const updatedProduct = await ProductClass.update(
@@ -63,7 +69,7 @@ router.patch("/:id", authenticate, allowSellerOnly, async (req, res) => {
 router.delete("/:id", authenticate, allowSellerOnly, async (req, res) => {
   const product = await ProductClass.findById(Number(req.params.id));
 
-  if (product?.sellerId !== req.user?.id) {
+  if (product?.sellerId !== req.user.id) {
     return res
       .status(403)
       .json({ message: "You are not authorized to delete this product." });

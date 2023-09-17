@@ -21,9 +21,16 @@ router.put("/", authenticate, async (req, res) => {
   // prevent updating the balance, we have a separate endpoint for that
   if (req.body.deposit >= 0) {
     return res.status(400).json({
-      message: "Deposit cannot be updated. Please use /user/deposit endpoint",
+      message:
+        "Deposit cannot be updated. Please use the /user/deposit endpoint",
     });
   }
+  if (req.body.id) {
+    return res.status(400).json({
+      message: "ID cannot be updated.",
+    });
+  }
+
   const user = await UserClass.update(req.user.id, req.body);
   res.json(UserClass.omitPassword(user));
 });
@@ -34,21 +41,21 @@ router.patch("/deposit", authenticate, allowBuyerOnly, async (req, res) => {
     return res.status(400).json({ message: "Invalid coin value." });
   }
 
-  const user = await UserClass.update(req.user?.id, {
-    deposit: req.body.deposit + req.user?.deposit,
+  const user = await UserClass.update(req.user.id, {
+    deposit: req.body.deposit + req.user.deposit,
   });
   res.json(UserClass.omitPassword(user));
 });
 
 // reset the authenticated user's deposit
 router.patch("/reset", authenticate, allowBuyerOnly, async (req, res) => {
-  const user = await UserClass.update(req.user?.id, { deposit: 0 });
+  const user = await UserClass.update(req.user.id, { deposit: 0 });
   res.json(UserClass.omitPassword(user));
 });
 
 // delete the authenticated user
-router.delete("/:id", authenticate, async (req, res) => {
-  await UserClass.deleteById(req.params.id);
+router.delete("/", authenticate, async (req, res) => {
+  await UserClass.deleteById(req.user.id);
   res.json({ message: "User deleted." });
 });
 
