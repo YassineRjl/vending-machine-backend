@@ -9,7 +9,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 - Node.js
-- npm
+- npm or yarn
 
 ### Installing
 
@@ -46,6 +46,7 @@ npm run test
 - Prisma
 - Jest
 - TypeScript
+- PostgreSQL
 
 ## Scripts
 
